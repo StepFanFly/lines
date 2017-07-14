@@ -24,8 +24,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    gridelem.cpp \
+    game.cpp \
+    setupdialog.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    gridelem.h \
+    game.h \
+    setupdialog.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    setupdialog.ui
+
+DISTFILES +=
