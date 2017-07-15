@@ -76,8 +76,8 @@ void gridElem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
         painter->setPen(fillC);
         center.setX((double)_size/2+1);
         center.setY((double)_size/2+1);
-        focal.setX((double)_size/2+5);
-        focal.setY((double)_size/2+9);
+        focal.setX((double)_size/2+4);
+        focal.setY((double)_size/2+8);
         shadow.setCenter(center);
         shadow.setFocalPoint(focal);
         shadow.setRadius(18);

@@ -146,6 +146,15 @@ void MainWindow::on_accepted(int x, int y, int next_n, int colors, int in_line)
             elems[i][j]->setType(temp[i][j]);
         }
     }
+    ui->graphicsView->setMinimumHeight(_size*_num_y+2);
+    ui->graphicsView->setMinimumWidth(_size*_num_x+2);
+    ui->graphicsView->setMaximumHeight(_size*_num_y+2);
+    ui->graphicsView->setMaximumWidth(_size*_num_x+2);
+    setMinimumHeight(_size*_num_y+84);
+    setMaximumHeight(_size*_num_y+64);
+    int itmp=_size*_next_n+2+280<_size*_num_x+26?_size*_num_x+26:_size*_next_n+2+280;
+    setMinimumWidth(itmp);
+    setMaximumWidth(itmp);
     ui->graphicsView_score->setMaximumWidth(_size*_next_n+2);
     ui->graphicsView_score->setMinimumWidth(_size*_next_n+2);
     ui->graphicsView_score->setMinimumHeight(42);
