@@ -29,6 +29,8 @@ private:
     game *m_game;
     int** temp;
     int* next;
+    gridElem* *next_elems;
+    QGraphicsScene *scene_next;
     int _num_x;
     int _num_y;
     int _size;//размер клетки в пикселях
@@ -47,6 +49,7 @@ private slots:
     void on_pushButton_clicked();
     void omg_hide();
     void on_pushButton_2_clicked();
+    void on_rejected();
 };
 
 #endif // MAINWINDOW_H

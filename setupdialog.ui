@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Новая игра</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>pics/icon.png</normaloff>pics/icon.png</iconset>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">

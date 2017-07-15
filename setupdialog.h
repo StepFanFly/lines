@@ -20,6 +20,8 @@ protected:
 private slots:
     void on_buttonBox_accepted();
 
+    void on_buttonBox_rejected();
+
 private:
     Ui::setupDialog *ui;
     int num_x;
@@ -29,6 +31,7 @@ private:
     int in_line;//сколько надо шариков в ряд
 signals:
     void on_accepted(int x, int y, int next_n, int colors, int in_line);
+    void on_rejected();
     void omg_hide();
 };
 

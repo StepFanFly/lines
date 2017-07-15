@@ -27,3 +27,8 @@ void setupDialog::on_buttonBox_accepted()
     in_line=ui->del_spin->value();
     emit on_accepted(num_x,num_y,next_n,colors,in_line);
 }
+
+void setupDialog::on_buttonBox_rejected()
+{
+    emit on_rejected();
+}

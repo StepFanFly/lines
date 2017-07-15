@@ -68,7 +68,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLCDNumber" name="lcdNumber">
+         <widget class="QLCDNumber" name="lcdnumber">
           <property name="minimumSize">
            <size>
             <width>120</width>
@@ -100,17 +100,17 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QGraphicsView" name="graphicsView_2">
+         <widget class="QGraphicsView" name="graphicsView_score">
           <property name="minimumSize">
            <size>
-            <width>200</width>
-            <height>80</height>
+            <width>400</width>
+            <height>40</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>200</width>
-            <height>80</height>
+            <width>400</width>
+            <height>40</height>
            </size>
           </property>
          </widget>

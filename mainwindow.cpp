@@ -11,6 +11,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->graphicsView_score->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->graphicsView_score->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    next=NULL;
+    scene=NULL;
+    elems=NULL;
+    m_game=NULL;
+    temp=NULL;
+    next_elems=NULL;
+    scene_next=NULL;
 }
 
 void MainWindow::clearTemp(){
@@ -38,24 +47,25 @@ void MainWindow::slot1(int x,int y,int type){
             elems[x][y]->setPressed(true);
             clearTemp();
             m_game->allowedMoves(temp,_pressed);
-            QString tmp;
             for(int i=0;i<_num_x;i++){
-                tmp.clear();
                 for(int j=0;j<_num_y;j++){
-
                     if(1==temp[i][j])elems[i][j]->setType(-1);
-                    tmp.append(QString::number(temp[i][j]));
-                    tmp.append("-");
                 }
-                qDebug()<<tmp;
             }
         }else{
             if(_smth_pressed){
                 clearTemp();
                 point to={x,y};
                 if(m_game->step(temp,next,&_score,_pressed,to)){
-                    ui->lcdNumber->display(_score);
-                    qDebug()<<_score;
+                    ui->lcdnumber->display(_score);
+                    for(int i=0;i<_next_n;i++){
+                        next_elems[i]->setType(next[i]);
+                    }
+                    for(int i=0;i<_next_n;i++){
+                        next_elems[i]=new gridElem(scene_next,_size,next[i],_colors);
+                        scene_next->addItem(next_elems[i]);
+                        next_elems[i]->setPos(i*_size,0);
+                    }
                     for(int i=0;i<_num_x;i++){
                         for(int j=0;j<_num_y;j++){
                             elems[i][j]->setPressed(false);
@@ -77,26 +87,23 @@ void MainWindow::slot1(int x,int y,int type){
 
 void MainWindow::on_accepted(int x, int y, int next_n, int colors, int in_line)
 {
-    if(!next)delete[] next;
-    if(!scene)delete scene;
-    if(!m_game)delete m_game;
-    if(!elems){
+    if(NULL!=next)delete[] next;
+    if(NULL!=scene)delete scene;
+    if(NULL!=m_game)delete m_game;
+    if(NULL!=next_elems)delete next_elems;
+    if(NULL!=elems){
         for(int i=0;i<_num_x;i++){
-            for(int j=0;j<_num_y;j++){
-                delete elems[i][j];
-            }
             delete[] elems[i];
         }
         delete[] elems;
     }
-    if(!temp){
+    if(NULL!=temp){
         for(int i=0;i<_num_x;i++){
             delete[] temp[i];
         }
         delete[] temp;
     }
-    ui->lcdNumber->display(0);
-    next=new int[_next_n];
+    ui->lcdnumber->display(0);
     _smth_pressed=false;
     _num_x=x;
     _num_y=y;
@@ -106,16 +113,13 @@ void MainWindow::on_accepted(int x, int y, int next_n, int colors, int in_line)
     _in_line=in_line;
     int t_x=_num_x*_size;
     int t_y=_num_y*_size;
+    next=new int[_next_n];
+    next_elems=new gridElem*[_next_n];
     scene= new QGraphicsScene();
+    scene_next=new QGraphicsScene();
     ui->graphicsView->setScene(scene);
+    ui->graphicsView_score->setScene(scene_next);
     scene->setSceneRect(0,0,t_x,t_y);
-    QColor r1;
-    r1.setHsv(0,0,75);
-    QPen rpan;
-    rpan.setColor(r1);
-    QBrush wbr;
-    wbr.setColor(r1);
-    scene->addRect(0,0,scene->width(),scene->height(),rpan,wbr);
     m_game = new game(x,y,next_n,colors,in_line);
     temp=new int*[_num_x];
     elems = new gridElem** [_num_x];
@@ -137,17 +141,26 @@ void MainWindow::on_accepted(int x, int y, int next_n, int colors, int in_line)
             elems[i][j]->setType(temp[i][j]);
         }
     }
+    ui->graphicsView_score->setMaximumWidth(_size*_next_n+2);
+    ui->graphicsView_score->setMinimumWidth(_size*_next_n+2);
+    ui->graphicsView_score->setMinimumHeight(42);
+    ui->graphicsView_score->setMaximumHeight(42);
+    ui->graphicsView_score->setAlignment(Qt::AlignCenter);
+    scene_next->setSceneRect(0,0,_size*_next_n,_size*_next_n);
+    for(int i=0;i<_next_n;i++){
+        next_elems[i]=new gridElem(scene_next,_size,next[i],_colors);
+        scene_next->addItem(next_elems[i]);
+        next_elems[i]->setPos(i*_size,0);
+    }
     show();
 }
 
 void MainWindow::showEvent(QShowEvent *event){
     QWidget::showEvent(event);
-    //ui->graphicsView->fitInView(scene->sceneRect(),Qt::KeepAspectRatio);
     QBrush brh;
     QColor tmp;
     tmp.setHsv(0,0,75);
     brh.setColor(tmp);
-    //ui->graphicsView->setBackgroundBrush(brh);
 }
 
 MainWindow::~MainWindow()
@@ -162,16 +175,14 @@ void MainWindow::on_pushButton_clicked()
     connect(ask,SIGNAL(omg_hide()),this,SLOT(omg_hide()));
     ask->show();
     connect(ask,SIGNAL(on_accepted(int,int,int,int,int)),this,SLOT(on_accepted(int,int,int,int,int)));
+    connect(ask,SIGNAL(on_rejected()),this,SLOT(on_rejected()));
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     event->ignore();
-    if (QMessageBox::Yes == QMessageBox::question(this, "Закрыть",
-                          "Уверены?",
-                          QMessageBox::Yes|QMessageBox::No))
-    {
-    event->accept();
+    if (QMessageBox::Yes == QMessageBox::question(this, "Закрыть","Уверены?",QMessageBox::Yes|QMessageBox::No)){
+        event->accept();
     }
 }
 
@@ -183,4 +194,9 @@ void MainWindow::omg_hide()
 void MainWindow::on_pushButton_2_clicked()
 {
     close();
+}
+
+void MainWindow::on_rejected()
+{
+    show();
 }
