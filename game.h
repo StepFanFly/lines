@@ -20,6 +20,7 @@ public:
     void gimmeNext(int* nextv);
     bool isFineshed();
 private:
+    int dfs_k;
     int **field;
     int **temp;
     int _x;//строки

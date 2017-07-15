@@ -1,5 +1,6 @@
 #include "game.h"
-
+#include <QDebug>
+#include <QString>
 game::game(int x, int y,int next_n,int colors, int line)
 {
     srand(time(NULL));
@@ -146,8 +147,8 @@ void game::clearTemp(){
 bool game::findLines(point &from)
 {
     bool res=false;
-
     int tgt = field[from._x][from._y];
+    if(tgt<=0)return false;
     int next=tgt;
     int step1=0;
     //vertical find start
