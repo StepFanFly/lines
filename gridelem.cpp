@@ -43,7 +43,7 @@ void gridElem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     painter->setBrush(fillC);
     painter->setPen(fillC);
     painter->drawRect(0,0,_size,_size);
-    QColor test1;
+    QColor mainColor;
     QRadialGradient gr1;
     QRadialGradient shadow;
     switch (_type) {
@@ -70,8 +70,7 @@ void gridElem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
         painter->setPen(fillC);
         painter->drawRect(1,1,_size-2,_size-2);
         int t=(359/_type_n)*_type;
-        test1.setHsv(t,255,125);
-
+        mainColor.setHsv(t,255,125);
         QPointF center;
         QPointF focal;
         painter->setPen(fillC);
@@ -91,15 +90,14 @@ void gridElem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
         focal.setY((double)_size/2-6);
         center.setX((double)_size/2);
         center.setY((double)_size/2);
-        painter->setPen(test1);
+        painter->setPen(mainColor);
         gr1.setCenter(center);
         gr1.setFocalPoint(focal);
         gr1.setRadius(15);
-        gr1.setColorAt(0.99,test1);
+        gr1.setColorAt(0.99,mainColor);
         gr1.setColorAt(1.0,Qt::black);
         gr1.setColorAt(0.0,Qt::white);
         painter->setBrush(gr1);
-
         painter->drawEllipse(center,15,15);
         break;
     }

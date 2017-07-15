@@ -310,6 +310,16 @@ bool game::genNext(){
     return true;
 }
 
+bool game::isEmpty()
+{
+    for(int i=0;i<_x;i++){
+        for(int j=0;j<_y;j++){
+            if(0!=field[i][j])return false;
+        }
+    }
+    return true;
+}
+
 bool game::isFineshed()
 {
     return end;
@@ -326,6 +336,12 @@ bool game::step(int **fieldv, int *nextv, int *scorev, point from, point to)
         field[from._x][from._y]=0;
         if(findLines(to)){
             delLines();
+            if(isEmpty()){
+                for(int i=0;i<_next_n;i++){
+                    field[next_c[i]->_x][next_c[i]->_y]=next[i];
+                }
+                genNext();
+            }
         }else{
             int k=0;
             bool bingo=false;
@@ -339,6 +355,12 @@ bool game::step(int **fieldv, int *nextv, int *scorev, point from, point to)
             }
             if (bingo) delLines();
             genNext();
+            if(isEmpty()){
+                for(int i=0;i<_next_n;i++){
+                    field[next_c[i]->_x][next_c[i]->_y]=next[i];
+                }
+                genNext();
+            }
         }
         if(!checkForEmpty())end=true;
         for(int i=0;i<_x;i++){

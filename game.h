@@ -41,6 +41,7 @@ private:
     void clearTemp();
     void delLines();
     bool genNext();
+    bool isEmpty();
 };
 
 #endif // GAME_H

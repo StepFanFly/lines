@@ -33,7 +33,6 @@ void MainWindow::clearTemp(){
 void MainWindow::slot1(int x,int y,int type){
     if(!m_game->isFineshed()){
         if(type>0){
-
             _smth_pressed=true;
             _pressed._x=x;
             _pressed._y=y;
@@ -52,6 +51,7 @@ void MainWindow::slot1(int x,int y,int type){
                     if(1==temp[i][j])elems[i][j]->setType(-1);
                 }
             }
+
         }else{
             if(_smth_pressed){
                 clearTemp();
@@ -66,6 +66,7 @@ void MainWindow::slot1(int x,int y,int type){
                         scene_next->addItem(next_elems[i]);
                         next_elems[i]->setPos(i*_size,0);
                     }
+                    m_game->gimmeField(temp);
                     for(int i=0;i<_num_x;i++){
                         for(int j=0;j<_num_y;j++){
                             elems[i][j]->setPressed(false);
@@ -73,8 +74,12 @@ void MainWindow::slot1(int x,int y,int type){
                         }
                     }
                 }
+
+                _smth_pressed=false;
             }
+
         }
+
     }else{
         QMessageBox msg;
         msg.setStyleSheet("QLabel{min-width: 120px}");
