@@ -51,7 +51,6 @@ void MainWindow::slot1(int x,int y,int type){
                     if(1==temp[i][j])elems[i][j]->setType(-1);
                 }
             }
-
         }else{
             if(_smth_pressed){
                 clearTemp();
@@ -74,13 +73,13 @@ void MainWindow::slot1(int x,int y,int type){
                         }
                     }
                 }
-
                 _smth_pressed=false;
             }
 
         }
 
     }else{
+        ui->pushButton_3->setEnabled(false);
         QMessageBox msg;
         msg.setStyleSheet("QLabel{min-width: 120px}");
         msg.setWindowTitle("Game over pal");
@@ -92,6 +91,7 @@ void MainWindow::slot1(int x,int y,int type){
 
 void MainWindow::on_accepted(int x, int y, int next_n, int colors, int in_line)
 {
+    ui->pushButton_3->setEnabled(true);
     if(NULL!=next)delete[] next;
     if(NULL!=scene)delete scene;
     if(NULL!=m_game)delete m_game;
@@ -150,8 +150,8 @@ void MainWindow::on_accepted(int x, int y, int next_n, int colors, int in_line)
     ui->graphicsView->setMinimumWidth(_size*_num_x+2);
     ui->graphicsView->setMaximumHeight(_size*_num_y+2);
     ui->graphicsView->setMaximumWidth(_size*_num_x+2);
-    setMinimumHeight(_size*_num_y+84);
-    setMaximumHeight(_size*_num_y+64);
+    setMinimumHeight(_size*_num_y+114);
+    setMaximumHeight(_size*_num_y+114);
     int itmp=_size*_next_n+2+280<_size*_num_x+26?_size*_num_x+26:_size*_next_n+2+280;
     setMinimumWidth(itmp);
     setMaximumWidth(itmp);
@@ -213,4 +213,22 @@ void MainWindow::on_pushButton_2_clicked()
 void MainWindow::on_rejected()
 {
     show();
+}
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    if(!m_game->isFineshed()){
+        m_game->skipStep(temp,next,&_score);
+        clearTemp();
+        m_game->gimmeField(temp);
+        for(int i=0;i<_num_x;i++){
+            for(int j=0;j<_num_y;j++){
+                elems[i][j]->setPressed(false);
+                elems[i][j]->setType(temp[i][j]);
+            }
+        }
+        scene->update();
+    }else{
+        ui->pushButton_3->setEnabled(false);
+    }
 }

@@ -66,7 +66,7 @@ game::~game()
 
 void game::random(point* &here)
 {
-    if(checkForEmpty()){
+    if(isFull()){
         bool yep=false;
         while(!yep){
             int xt=rand()%_x;
@@ -95,7 +95,7 @@ bool game::inField(const point &pnt){
     return res;
 }
 
-bool game::checkForEmpty()
+bool game::isFull()
 {
     for(int i=0;i<_x;i++){
         for(int j=0;j<_y;j++){
@@ -345,7 +345,7 @@ bool game::step(int **fieldv, int *nextv, int *scorev, point from, point to)
         }else{
             int k=0;
             bool bingo=false;
-            while(checkForEmpty()&(k<_next_n)){
+            while(isFull()&(k<_next_n)){
                 if(0!=field[next_c[k]->_x][next_c[k]->_y]){
                     random(next_c[k]);
                 }
@@ -362,7 +362,7 @@ bool game::step(int **fieldv, int *nextv, int *scorev, point from, point to)
                 genNext();
             }
         }
-        if(!checkForEmpty())end=true;
+        if(!isFull())end=true;
         for(int i=0;i<_x;i++){
             for(int j=0;j<_y;j++){
                 fieldv[i][j]=field[i][j];
@@ -377,6 +377,39 @@ bool game::step(int **fieldv, int *nextv, int *scorev, point from, point to)
     }
 
     return true;
+}
+
+void game::skipStep(int **fieldv, int *nextv, int *scorev)
+{
+    clearTemp();
+    int k=0;
+    bool bingo=false;
+    while(isFull()&(k<_next_n)){
+        if(0!=field[next_c[k]->_x][next_c[k]->_y]){
+            random(next_c[k]);
+        }
+        field[next_c[k]->_x][next_c[k]->_y]=next[k];
+        if(findLines(*next_c[k]))bingo=true;
+        k+=1;
+    }
+    if (bingo) delLines();
+    genNext();
+    if(isEmpty()){
+        for(int i=0;i<_next_n;i++){
+            field[next_c[i]->_x][next_c[i]->_y]=next[i];
+        }
+        genNext();
+    }
+    if(!isFull())end=true;
+    for(int i=0;i<_x;i++){
+        for(int j=0;j<_y;j++){
+            fieldv[i][j]=field[i][j];
+        }
+    }
+    for(int i=0;i<_next_n;i++){
+        nextv[i]=next[i];
+    }
+    *scorev=_score;
 }
 
 void game::allowedMoves(int **allowed, point from)

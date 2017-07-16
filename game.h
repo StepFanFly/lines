@@ -14,7 +14,8 @@ public:
     game(int x, int y, int next_n, int colors, int line);
     ~game();
     void startGame(int **fieldv, int *nextv);
-    bool step(int** field, int* next, int* score, point from, point to);
+    bool step(int **fieldv, int *nextv, int *scorev, point from, point to);
+    void skipStep(int** fieldv, int* nextv, int* scorev);
     void allowedMoves(int** temp,point from);
     void gimmeField(int** fieldv);
     void gimmeNext(int* nextv);
@@ -33,7 +34,7 @@ private:
     int _line;//сколько надо в ряд
     bool end;
     void random(point* &here);
-    bool checkForEmpty();
+    bool isFull();
     bool inField(const point &pnt);
     bool inField(const int &x, const int &y);
     void dfs(point from);

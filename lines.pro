@@ -27,14 +27,12 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     gridelem.cpp \
     game.cpp \
-    setupdialog.cpp \
-    mgraphicsview.cpp
+    setupdialog.cpp
 
 HEADERS  += mainwindow.h \
     gridelem.h \
     game.h \
-    setupdialog.h \
-    mgraphicsview.h
+    setupdialog.h
 
 FORMS    += mainwindow.ui \
     setupdialog.ui

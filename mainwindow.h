@@ -40,7 +40,6 @@ private:
     bool _smth_pressed;
     point _pressed;
     int _score;
-    bool gameover;
     void gameLoop();
     void clearTemp();
 private slots:
@@ -50,6 +49,7 @@ private slots:
     void omg_hide();
     void on_pushButton_2_clicked();
     void on_rejected();
+    void on_pushButton_3_clicked();
 };
 
 #endif // MAINWINDOW_H

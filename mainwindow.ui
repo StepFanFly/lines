@@ -160,6 +160,25 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_3">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Пропустить ход</string>
+          </property>
+          <property name="autoDefault">
+           <bool>false</bool>
+          </property>
+          <property name="default">
+           <bool>false</bool>
+          </property>
+          <property name="flat">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item>
