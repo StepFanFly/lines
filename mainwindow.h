@@ -33,10 +33,10 @@ private:
     QGraphicsScene *scene_next;
     int _num_x;
     int _num_y;
-    int _size;//размер клетки в пикселях
-    int _next_n;//сколько шариков ставится после хода
-    int _colors;//сколько возможно цветов
-    int _in_line;//сколько надо шариков в ряд
+    int _size;//grid size px
+    int _next_n;//new balls count
+    int _colors;//how much colors
+    int _in_line;//how much balls in line
     bool _smth_pressed;
     point _pressed;
     int _score;

@@ -227,6 +227,7 @@ void MainWindow::on_pushButton_3_clicked()
                 elems[i][j]->setType(temp[i][j]);
             }
         }
+        ui->lcdnumber->display(_score);
         scene->update();
     }else{
         ui->pushButton_3->setEnabled(false);

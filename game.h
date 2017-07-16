@@ -24,14 +24,14 @@ private:
     int dfs_k;
     int **field;
     int **temp;
-    int _x;//строки
-    int _y;//столбцы
+    int _x;//height
+    int _y;//wight
     int *next;
     point **next_c;
-    int _next_n;//сколько новых шариков
+    int _next_n;//new balls count
     int _score;
-    int _colors;//сколько вариантов цветов
-    int _line;//сколько надо в ряд
+    int _colors;//colors count
+    int _line;//how much must be in line
     bool end;
     void random(point* &here);
     bool isFull();
