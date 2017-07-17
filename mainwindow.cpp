@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     temp=NULL;
     next_elems=NULL;
     scene_next=NULL;
+    ask=NULL;
 }
 
 void MainWindow::clearTemp(){
@@ -61,6 +62,10 @@ void MainWindow::slot1(int x,int y,int type){
                         next_elems[i]->setType(next[i]);
                     }
                     for(int i=0;i<_next_n;i++){
+                        if(next_elems[i]!=NULL){
+                            delete next_elems[i];
+                            next_elems[i]=NULL;
+                        }
                         next_elems[i]=new gridElem(scene_next,_size,next[i],_colors);
                         scene_next->addItem(next_elems[i]);
                         next_elems[i]->setPos(i*_size,0);
@@ -92,21 +97,47 @@ void MainWindow::slot1(int x,int y,int type){
 void MainWindow::on_accepted(int x, int y, int next_n, int colors, int in_line)
 {
     ui->pushButton_3->setEnabled(true);
-    if(NULL!=next)delete[] next;
-    if(NULL!=scene)delete scene;
-    if(NULL!=m_game)delete m_game;
-    if(NULL!=next_elems)delete next_elems;
+    if(NULL!=next){
+        delete[] next;
+        next=NULL;
+    }
+    if(NULL!=m_game){
+        delete m_game;
+        m_game=NULL;
+    }
+    if(NULL!=next_elems){
+        for(int i=0;i<_next_n;i++){
+            scene_next->removeItem(next_elems[i]);
+            delete next_elems[i];
+        }
+        delete[] next_elems;
+        next_elems=NULL;
+    }
     if(NULL!=elems){
         for(int i=0;i<_num_x;i++){
+            for(int j=0;j<_num_y;j++){
+                scene->removeItem(elems[i][j]);
+                delete elems[i][j];
+            }
             delete[] elems[i];
         }
         delete[] elems;
+        elems=NULL;
+    }
+    if(NULL!=scene){
+        delete scene;
+        scene=NULL;
     }
     if(NULL!=temp){
         for(int i=0;i<_num_x;i++){
             delete[] temp[i];
         }
         delete[] temp;
+        temp=NULL;
+    }
+    if(NULL!=scene_next){
+        delete scene_next;
+        scene_next=NULL;
     }
     ui->lcdnumber->display(0);
     _smth_pressed=false;
@@ -184,7 +215,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    setupDialog *ask;
+    if(NULL!=ask){
+        delete ask;
+        ask=NULL;
+    }
     ask=new setupDialog;
     connect(ask,SIGNAL(omg_hide()),this,SLOT(omg_hide()));
     ask->show();

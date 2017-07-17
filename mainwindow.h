@@ -40,6 +40,7 @@ private:
     bool _smth_pressed;
     point _pressed;
     int _score;
+    setupDialog *ask;
     void gameLoop();
     void clearTemp();
 private slots:
