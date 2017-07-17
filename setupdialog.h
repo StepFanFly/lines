@@ -27,8 +27,8 @@ private:
     int num_x;
     int num_y;
     int next_n;//new balls count
-    int colors;//how much colors
-    int in_line;//how much balls in line
+    int colors;//how many colors
+    int in_line;//how many balls in line
 signals:
     void on_accepted(int x, int y, int next_n, int colors, int in_line);
     void on_rejected();

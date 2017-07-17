@@ -31,7 +31,7 @@ private:
     int _next_n;//new balls count
     int _score;
     int _colors;//colors count
-    int _line;//how much must be in line
+    int _line;//how many must be in line
     bool end;
     void random(point* &here);
     bool isFull();

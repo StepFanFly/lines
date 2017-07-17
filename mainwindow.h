@@ -35,8 +35,8 @@ private:
     int _num_y;
     int _size;//grid size px
     int _next_n;//new balls count
-    int _colors;//how much colors
-    int _in_line;//how much balls in line
+    int _colors;//how many colors
+    int _in_line;//how many balls in line
     bool _smth_pressed;
     point _pressed;
     int _score;
